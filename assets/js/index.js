@@ -1,9 +1,13 @@
 $(document).ready(function() {
 
-    var employeeName = $("#employeeName").val();
-    var role = $("#role").val();
-    var startDate = $("#startDate").val();
-    var monthlyRate = $("#monthlyRate").val();
+    var trainName = $("#trainName").val();
+    var destination = $("#destination").val();
+    var firstTrain = $("#firstTrain").val();
+    var frequency = $("#frequency").val();
+
+    var currentTime = moment();
+
+    document.getElementById("trainName").focus();
     
     // Initialize Firebase
     var config = {
@@ -19,6 +23,8 @@ $(document).ready(function() {
     
     var database = firebase.database();
     
+    //PULL EVERYTHING BACK FROM DB
+    //Child added function also gets run on load
     database.ref().on("child_added", function(snapshot) {
     
         console.log("This DB event function is firing");
@@ -26,77 +32,92 @@ $(document).ready(function() {
         //dynamically create the HTML
         var tableBody = $("#tableBody")
         var newTable = $("<tr>");
-        var tdEmployeeName = $("<td>");
-        var tdRole = $("<td>");
-        var tdStartDate = $("<td>");
-        var tdMonthsWorked = $("<td>");
-        var tdMonthlyRate = $("<td>");
-        var tdTotalBilled = $("<td>");
+        var tdTrainName = $("<td>");
+        var tdDestination = $("<td>");
+        var tdFrequency = $("<td>");
+        var tdNextArrival = $("<td>");
+        var tdMinutesAway = $("<td>");
     
         //Append all of the newly created divs to the right place
         tableBody.append(newTable);
-        newTable.append(tdEmployeeName);
-        newTable.append(tdRole);
-        newTable.append(tdStartDate);
-        newTable.append(tdMonthsWorked);
-        newTable.append(tdMonthlyRate);
-        newTable.append(tdTotalBilled);
+        newTable.append(tdTrainName);
+        newTable.append(tdDestination);
+        newTable.append(tdFrequency);
+        newTable.append(tdNextArrival);
+        newTable.append(tdMinutesAway);
     
         //Store what you get back from the DB
-        employeeNameDB = snapshot.val().employeeName;
-        roleDB = snapshot.val().role;
-        startDateDB = snapshot.val().startDate;
-        monthlyRateDB = snapshot.val().monthlyRate;
+        trainNameDB = snapshot.val().trainName;
+        destinationDB = snapshot.val().destination;
+        firstTrainDB = snapshot.val().firstTrain;
+        frequencyDB = snapshot.val().frequency;
+
+        //NEED LOOP HERE FOR CALCULATIONS *************************************
+        //each train needs it own nextArrival and MinutesAway calc
+
+        //calculate Minutes Away *****
+        //not sure if we need the date
+
+        // // var momentDateFormat = "MM/DD/YYYY";
+        // var momentTimeFormat = "HH:mm"
+        // // var convertedDate = moment(/*dateInput*/, momentDateFormat);
+        // var convertedTime = moment(firstTrainDB, momentTimeFormat);
+        // // var monthsWorked = moment(convertedDate).diff(moment(), "months");
+        // var minutesAway = moment(convertedTime).diff(moment(), "minutes");
+        // var minutesAway = -minutesAway;
+        // console.log(nextArrival);
     
-        //calculate months worked
-        var momentFormat = "MM/DD/YYYY";
-        var convertedDate = moment(startDateDB, momentFormat);
-        var monthsWorked = moment(convertedDate).diff(moment(), "months");
-        var monthsWorked = -monthsWorked;
-        console.log(monthsWorked);
-    
-        //calculate total $ billed
-        var totalBilled = monthsWorked * monthlyRateDB;
-        console.log(totalBilled);
+        //calculate Next Arrival *****
+
+        ////if a train comes, trainIndex++ .. Somthing like this
+        // var trainIndex = 1;
+        // if(currentTime > firstTrain + (trainIndex*frequency)){
+        //     trainIndex++;
+        // }
+        
+        // var nextArrivalTime = (firstTrain + (trainIndex*frequency)) + frequency
+
+        var nextArrivalDB = 0;
+        var minutesAwayDB = 0;
         
         //Add the DB data to the HTML
-        tdEmployeeName.text(employeeNameDB);
-        tdRole.text(roleDB);
-        tdStartDate.text(startDateDB);
-        tdMonthlyRate.text(monthlyRateDB);
-        tdMonthsWorked.text(monthsWorked);
-        tdTotalBilled.text(totalBilled);
+        tdTrainName.text(trainNameDB);
+        tdDestination.text(destinationDB);
+        tdFrequency.text(frequencyDB);
+        tdNextArrival.text(nextArrivalDB);
+        tdMinutesAway.text(minutesAwayDB);
     
     }, function(errorObject) {
     console.log("The read failed: " + errorObject.code);
     });
     
+    // PUSH EVERYTHING TO DB
     $("#submitButton").on("click", function(event) {
     
-        employeeName = $("#employeeName").val();
-        role = $("#role").val();
-        startDate = $("#startDate").val();
-        monthlyRate = $("#monthlyRate").val();
+        trainName = $("#trainName").val();
+        destination = $("#destination").val();
+        firstTrain = $("#firstTrain").val();
+        frequency = $("#frequency").val();
     
-        console.log(employeeName);
-        console.log(role);
-        console.log(startDate);
-        console.log(monthlyRate);
+        console.log(trainName);
+        console.log(destination);
+        console.log(firstTrain);
+        console.log(frequency);
     
         database.ref().push({
-            employeeName: employeeName,
-            role: role,
-            startDate: startDate,
-            monthlyRate: monthlyRate,
+            trainName: trainName,
+            destination: destination,
+            firstTrain: firstTrain,
+            frequency: frequency,
             dateAdded: firebase.database.ServerValue.TIMESTAMP
         });
     });
     
     $("#clearButton").on("click", function(event) {
-        employeeName = $("#employeeName").val("");
-        role = $("#role").val("");
-        startDate = $("#startDate").val("");
-        monthlyRate = $("#monthlyRate").val("");
+        trainName = $("#trainName").val("");
+        destination = $("#destination").val("");
+        firstTrain = $("#firstTrain").val("");
+        frequency = $("#frequency").val("");
     });
 
 });
