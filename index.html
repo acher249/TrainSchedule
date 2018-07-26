@@ -7,70 +7,80 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
     <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    <script type="text/javascript" src="js/toxiclibs.min.js"></script>
+    <script src="./assets/js/dat.gui.min.js"></script>
+    <script src="./assets/js/toxiclibs.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+    
     <title>Train Schedule</title>
 </head>
 
 <body>
-    <div class="jumbotron">
-        <h1 class=" display-4 mainTitle">Train Schedule</h1>
-    </div>
+    <!-- Canvas if for Experimenting with new library -->
+    <canvas id="example" height="100px"></canvas>
 
-    <div class="card card2">
-        <h5 class="card-header">Current Train Schedule:</h5>
-        <div class="card-body" id="results">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Train Name:</th>
-                        <th scope="col">Destination:</th>
-                        <th scope="col">Frequency (min):</th>
-                        <th scope="col">Next Arrival:</th>
-                        <th scope="col">Minutes Away:</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    <!-- This HTML to be created dynamically -->
-                    <!-- <tr>
-                        <td>Mark Chernick</td>
-                        <td>CEO</td>
-                        <td>06/12/1991</td>
-                        <td>43</td>
-                        <td>22400</td>
-                        <td>2358000</td>
-                    </tr> -->
-                </tbody>
-            </table>
+    <div class="sideBounds">
+        <div class="jumbotron">
+            <h1 class=" display-4 mainTitle">Train Schedule</h1>
+        </div>
+    
+        <div class="card card2">
+            <h5 class="card-header">Current Train Schedule:</h5>
+            <div class="card-body" id="results">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Train Name:</th>
+                            <th scope="col">Destination:</th>
+                            <th scope="col">Frequency (min):</th>
+                            <th scope="col">Next Arrival:</th>
+                            <th scope="col">Minutes Away:</th>
+                            <th scope="col"></th> <!--Delete-->
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- This HTML to be created dynamically -->
+                        <!-- <tr>
+                            <td>Mark Chernick</td>
+                            <td>CEO</td>
+                            <td>06/12/1991</td>
+                            <td>43</td>
+                            <td>22400</td>
+                            <td>2358000</td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    
+        <div class="card">
+            <h5 class="card-header">Add Train</h5>
+            <div class="card-body">
+                    <form>
+                        <div class="form-group searchTerm">
+                            <label for="trainName">Train Name:</label>
+                            <input type="text" class="form-control" id="trainName">
+                        </div>
+                        <div class="form-group numberRecord">
+                            <label for="destination">Destination:</label>
+                            <input type="text" class="form-control" id="destination">
+                        </div>
+                        <div class="form-group startYear">
+                                <label for="firstTrain">First Train Time (HH:mm - Military Time)</label>
+                                <input type="text" class="form-control" id="firstTrain">
+                            </div>
+                            <div class="form-group EndYear">
+                                <label for="frequency">Frequency (min)</label>
+                                <input type="text" class="form-control" id="frequency">
+                            </div>
+                    </form>
+    
+                <a href="#" class="btn btn-primary" id="submitButton">Submit</a>
+                <a href="#" class="btn btn-primary" id="clearButton">Clear</a>
+            </div>
         </div>
     </div>
-
-    <div class="card">
-        <h5 class="card-header">Add Train</h5>
-        <div class="card-body">
-                <form>
-                    <div class="form-group searchTerm">
-                        <label for="trainName">Train Name:</label>
-                        <input type="text" class="form-control" id="trainName">
-                    </div>
-                    <div class="form-group numberRecord">
-                        <label for="destination">Destination:</label>
-                        <input type="text" class="form-control" id="destination">
-                    </div>
-                    <div class="form-group startYear">
-                            <label for="firstTrain">First Train Time (HH:mm - Military Time)</label>
-                            <input type="text" class="form-control" id="firstTrain">
-                        </div>
-                        <div class="form-group EndYear">
-                            <label for="frequency">Frequency (min)</label>
-                            <input type="text" class="form-control" id="frequency">
-                        </div>
-                </form>
-
-            <a href="#" class="btn btn-primary" id="submitButton">Submit</a>
-            <a href="#" class="btn btn-primary" id="clearButton">Clear</a>
-        </div>
-    </div>
-
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

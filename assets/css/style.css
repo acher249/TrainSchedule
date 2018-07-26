@@ -1,4 +1,4 @@
-body {
+.sideBounds {
     margin-left: 15%;
     margin-right: 15%;
 }
@@ -32,3 +32,29 @@ hr {
 .display-4 {
     font-size: 32px;
 }
+
+#deleteImg {
+    height: 20px;
+    width: auto;
+}
+
+button {
+    background-color: rgb(255, 255, 255); /* Green */
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.table {
+    margin-bottom: 0px;
+}
+
+/* canvas {
+    height: 100%;
+    width: 100%;
+    background-color: #e9ecef;
+} */
