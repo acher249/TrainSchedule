@@ -92,6 +92,7 @@ $(document).ready(function() {
         var tMinutesTillTrain = frequencyDB - tRemainder;
         console.log("minutes till train: " + tMinutesTillTrain);
 
+
         var nextTrain = moment().add(tMinutesTillTrain, "minutes");
         console.log("next arrival: " + moment(nextTrain).format("hh:mm"));
 
@@ -100,8 +101,8 @@ $(document).ready(function() {
         //**********************************************************************
 
         //get rid of this later
-        var nextArrivalDB = 0;
-        var minutesAwayDB = 0;
+        var nextArrivalDB = nextTrain;
+        var minutesAwayDB = tMinutesTillTrain + " minutes";
         
         //Add the DB data to the HTML
         tdTrainName.text(trainNameDB);
