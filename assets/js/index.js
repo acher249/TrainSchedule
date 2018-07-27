@@ -53,10 +53,13 @@ $(document).ready(function() {
         var tdDeleteButton = $("<td>");
         var deleteButton = $("<button>")
         deleteButton.attr("id", "deleteButton");
+        deleteButton.attr("class", snapshot.key);
+        //img in button
         var deleteImg = $("<img>")
         var deleteImgUrl = "https://png.icons8.com/metro/1600/delete.png"
         deleteImg.attr("src", deleteImgUrl);
         deleteImg.attr("id", "deleteImg");
+
     
         //Append all of the newly created divs to the right place
         tableBody.append(newTable);
@@ -117,8 +120,11 @@ $(document).ready(function() {
     console.log("The read failed: " + errorObject.code);
     });
 
-    $(document).on('click', '#deleteButton', function(){
-        console.log("delete button clicked");
+    $(document).on('click', '#deleteButton', function(e){
+
+        //take id from button className in event object.
+        // go to the db and delete that out.
+        console.log(e);
         //Two steps: delete out of DB then delete out of html
         // var rowToDelete= document.getElementById(childKey);
         // rowToDelete.parentNode.removeChild(rowToDelete);
