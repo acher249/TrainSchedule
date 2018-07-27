@@ -91,6 +91,7 @@ $(document).ready(function() {
 
         var tMinutesTillTrain = frequencyDB - tRemainder;
         console.log("minutes till train: " + tMinutesTillTrain);
+        console.log(typeof tMinutesTillTrain);
 
 
         var nextTrain = moment().add(tMinutesTillTrain, "minutes");
@@ -102,13 +103,16 @@ $(document).ready(function() {
 
         //get rid of this later
         var nextArrivalDB = nextTrain;
-        var minutesAwayDB = tMinutesTillTrain + " minutes";
+        var minutesAwayDB = tMinutesTillTrain;
         
         //Add the DB data to the HTML
         tdTrainName.text(trainNameDB);
         tdDestination.text(destinationDB);
         tdFrequency.text(frequencyDB);
         tdNextArrival.text(nextArrivalDB);
+
+        //This doesn't look correct because it is a string.. 
+        //Needs to be a number data type to show correctly..
         tdMinutesAway.text(minutesAwayDB);
     
     }, function(errorObject) {
