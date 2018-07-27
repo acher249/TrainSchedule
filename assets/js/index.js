@@ -5,10 +5,6 @@ $(document).ready(function() {
     var firstTrain = $("#firstTrain").val();
     var frequency = $("#frequency").val();
 
-    var currentTime = moment();
-    console.log("CURRENT TIME: " + currentTime);
-
-
     document.getElementById("trainName").focus();
     
     // Initialize Firebase
@@ -39,21 +35,17 @@ $(document).ready(function() {
         var newTable = $("<tr>");
         newTable.attr("id", snapshot.key);
         var tdTrainName = $("<td>");
-        tdTrainName.attr("id", snapshot.key);
-        var tdDestination = $("<td>");
-        tdDestination.attr("id", snapshot.key);
+        var tdDestination = $("<td>");;
         var tdFrequency = $("<td>");
-        tdFrequency.attr("id", snapshot.key);
         var tdNextArrival = $("<td>");
-        tdNextArrival.attr("id", snapshot.key);
         var tdMinutesAway = $("<td>");
-        tdMinutesAway.attr("id", snapshot.key);
 
         //delete button
         var tdDeleteButton = $("<td>");
         var deleteButton = $("<button>")
         deleteButton.attr("id", "deleteButton");
         deleteButton.attr("class", snapshot.key);
+
         //img in button
         var deleteImg = $("<img>")
         var deleteImgUrl = "https://png.icons8.com/metro/1600/delete.png"
@@ -77,35 +69,37 @@ $(document).ready(function() {
         //Store what you get back from the DB
         trainNameDB = snapshot.val().trainName;
         destinationDB = snapshot.val().destination;
-        firstTrainDB = snapshot.val().firstTrain;
+        firstTrainDB = snapshot.val().firstTrain; //firstTime
         frequencyDB = snapshot.val().frequency;
 
         //NEED LOOP HERE FOR CALCULATIONS *************************************
+        //*********************************************************************
         //each train needs it own nextArrival and MinutesAway calc
-        //Look at moment Docs
 
-        //calculate Minutes Away *****
-        //not sure if we need the date
 
-        // // var momentDateFormat = "MM/DD/YYYY";
-        // var momentTimeFormat = "HH:mm"
-        // // var convertedDate = moment(/*dateInput*/, momentDateFormat);
-        // var convertedTime = moment(firstTrainDB, momentTimeFormat);
-        // // var monthsWorked = moment(convertedDate).diff(moment(), "months");
-        // var minutesAway = moment(convertedTime).diff(moment(), "minutes");
-        // var minutesAway = -minutesAway;
-        // console.log(nextArrival);
-    
-        //calculate Next Arrival *****
+        var currentTime = moment().format('LT');
+        console.log("firstTrainDB: " + firstTrainDB);
+        //to make sure that the first time is before the current time
+        var firstTimeConverted = moment(frequencyDB, "HH:mm").subtract(1, "years");
+        console.log("firstTimeConverted: " + firstTimeConverted);
 
-        ////if a train comes, trainIndex++ .. Somthing like this
-        // var trainIndex = 1;
-        // if(currentTime > firstTrain + (trainIndex*frequency)){
-        //     trainIndex++;
-        // }
-        
-        // var nextArrivalTime = (firstTrain + (trainIndex*frequency)) + frequency
+        var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+        console.log("difference in time in minutes: " + diffTime);
 
+        var tRemainder = diffTime % frequencyDB;
+        console.log("tRemainder: " + tRemainder);
+
+        var tMinutesTillTrain = frequencyDB - tRemainder;
+        console.log("minutes till train: " + tMinutesTillTrain);
+
+        var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+        console.log("next arrival: " + moment(nextTrain).format("hh:mm"));
+
+
+        //**********************************************************************
+        //**********************************************************************
+
+        //get rid of this later
         var nextArrivalDB = 0;
         var minutesAwayDB = 0;
         
@@ -122,12 +116,29 @@ $(document).ready(function() {
 
     $(document).on('click', '#deleteButton', function(e){
 
-        //take id from button className in event object.
-        // go to the db and delete that out.
-        console.log(e);
-        //Two steps: delete out of DB then delete out of html
-        // var rowToDelete= document.getElementById(childKey);
-        // rowToDelete.parentNode.removeChild(rowToDelete);
+        //Use Event Object to look at parameters of element you are clicking
+        // console.log(e);
+        var DatabaseId = e.originalEvent.target.className;
+        // console.log("Database Id: " + DatabaseId);
+
+        //confirm delete alert
+        swal({
+            title: "Are you sure?",
+            text: "Are you sure you would like to delete this train from the schedule?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                database.ref(DatabaseId).remove().then(function () {
+                    //deleted out of DB
+                });
+            } else {
+                //Canceled
+            }
+        });
+
     });
 
     //This is listening when an item get removerd from DB, update the HTML

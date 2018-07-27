@@ -28,29 +28,31 @@
         <div class="card card2">
             <h5 class="card-header">Current Train Schedule:</h5>
             <div class="card-body" id="results">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Train Name:</th>
-                            <th scope="col">Destination:</th>
-                            <th scope="col">Frequency (min):</th>
-                            <th scope="col">Next Arrival:</th>
-                            <th scope="col">Minutes Away:</th>
-                            <th scope="col"></th> <!--Delete-->
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        <!-- This HTML to be created dynamically -->
-                        <!-- <tr>
-                            <td>Mark Chernick</td>
-                            <td>CEO</td>
-                            <td>06/12/1991</td>
-                            <td>43</td>
-                            <td>22400</td>
-                            <td>2358000</td>
-                        </tr> -->
-                    </tbody>
-                </table>
+                <div style="overflow-x:auto;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Train Name:</th>
+                                <th scope="col">Destination:</th>
+                                <th scope="col">Frequency (min):</th>
+                                <th scope="col">Next Arrival:</th>
+                                <th scope="col">Minutes Away:</th>
+                                <th scope="col"></th> <!--Delete-->
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- This HTML to be created dynamically -->
+                            <!-- <tr>
+                                <td>Mark Chernick</td>
+                                <td>CEO</td>
+                                <td>06/12/1991</td>
+                                <td>43</td>
+                                <td>22400</td>
+                                <td>2358000</td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     
@@ -86,6 +88,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="./assets/js/index.js"></script>
 </body>
 </html>

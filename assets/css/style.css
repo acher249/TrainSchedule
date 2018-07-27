@@ -36,6 +36,8 @@ hr {
 #deleteImg {
     height: 20px;
     width: auto;
+    /* Make Delete Img non-clickable */
+    pointer-events: none;
 }
 
 button {
