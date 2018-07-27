@@ -6,7 +6,7 @@ $(document).ready(function() {
     var frequency = $("#frequency").val();
 
     var currentTime = moment();
-    debug.log("CURRENT TIME: " + currentTime);
+    console.log("CURRENT TIME: " + currentTime);
 
 
     document.getElementById("trainName").focus();
@@ -79,6 +79,7 @@ $(document).ready(function() {
 
         //NEED LOOP HERE FOR CALCULATIONS *************************************
         //each train needs it own nextArrival and MinutesAway calc
+        //Look at moment Docs
 
         //calculate Minutes Away *****
         //not sure if we need the date
